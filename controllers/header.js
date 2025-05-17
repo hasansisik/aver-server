@@ -86,10 +86,7 @@ const updateHeader = async (req, res) => {
 // Add menu item to header
 const addMenuItem = async (req, res) => {
   try {
-    console.log("addMenuItem called", req.body);
     const { name, link, type } = req.body;
-    console.log("Request body:", { name, link, type });
-    console.log("User in request:", req.user);
 
     if (!req.user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ 

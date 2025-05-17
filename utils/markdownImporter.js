@@ -43,16 +43,10 @@ const importMarkdownFiles = async (directoryPath) => {
   try {
     // Connect to MongoDB
     await mongoose.connect(process.env.MONGO_URL);
-    console.log('Connected to MongoDB');
-    
-    // Read files from directory
     const files = fs.readdirSync(directoryPath);
-    
-    // Filter markdown files
+
     const markdownFiles = files.filter(file => file.endsWith('.md') && !file.startsWith('_'));
-    
-    console.log(`Found ${markdownFiles.length} markdown files to import`);
-    
+        
     // Process each file
     for (const file of markdownFiles) {
       const filePath = path.join(directoryPath, file);
@@ -62,29 +56,24 @@ const importMarkdownFiles = async (directoryPath) => {
       const existingBlog = await Blog.findOne({ slug: blogData.slug });
       
       if (existingBlog) {
-        console.log(`Blog with slug "${blogData.slug}" already exists. Updating...`);
         
         // Update existing blog
         Object.assign(existingBlog, blogData);
         await existingBlog.save();
         
-        console.log(`Updated blog: ${blogData.title}`);
       } else {
         // Create new blog
         const newBlog = new Blog(blogData);
         await newBlog.save();
         
-        console.log(`Imported new blog: ${blogData.title}`);
       }
     }
     
-    console.log('Import completed successfully');
   } catch (error) {
     console.error('Import failed:', error);
   } finally {
     // Disconnect from MongoDB
     await mongoose.disconnect();
-    console.log('Disconnected from MongoDB');
   }
 };
 

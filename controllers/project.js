@@ -32,12 +32,9 @@ const getAllProjects = async (req, res) => {
 // Get a single project post by slug
 const getProjectBySlug = async (req, res) => {
   try {
-    const { slug } = req.params;
-    console.log("getProjectBySlug called with slug:", slug);
-    
+    const { slug } = req.params;   
     const project = await Project.findOne({ slug, isActive: true });
-    
-    
+  
     // If there's markdown content but no content blocks, convert markdown to basic content blocks
     if (project.markdownContent && (!project.contentBlocks || project.contentBlocks.length === 0)) {
       // This is a simple conversion - in a real app, you'd use a proper markdown parser
@@ -62,7 +59,6 @@ const getProjectBySlug = async (req, res) => {
 const getProjectById = async (req, res) => {
   try {
     const { projectId } = req.params;
-    console.log("getProjectById called with projectId:", projectId);
     
     // Validate MongoDB ObjectId format
     if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -73,7 +69,6 @@ const getProjectById = async (req, res) => {
     }
     
     const project = await Project.findById(projectId);
-    console.log("Project found:", project ? "Yes" : "No");
     
     if (!project || !project.isActive) {
       return res.status(StatusCodes.NOT_FOUND).json({

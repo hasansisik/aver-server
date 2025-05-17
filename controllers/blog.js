@@ -33,7 +33,6 @@ const getAllBlogs = async (req, res) => {
 const getBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    console.log("getBlogBySlug called with slug:", slug);
     
     const blog = await Blog.findOne({ slug, isActive: true });
     
@@ -67,8 +66,6 @@ const getBlogBySlug = async (req, res) => {
 const getBlogById = async (req, res) => {
   try {
     const { blogId } = req.params;
-    console.log("getBlogById called with blogId:", blogId);
-    console.log("req.params:", JSON.stringify(req.params));
     
     // Validate MongoDB ObjectId format
     if (!mongoose.Types.ObjectId.isValid(blogId)) {

@@ -30,7 +30,6 @@ const getAllGlossaryTerms = async (req, res) => {
 const getGlossaryTermBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    console.log("getGlossaryTermBySlug called with slug:", slug);
     
     const glossaryTerm = await Glossary.findOne({ slug, isActive: true });
     
@@ -54,7 +53,6 @@ const getGlossaryTermBySlug = async (req, res) => {
 const getGlossaryTermById = async (req, res) => {
   try {
     const { termId } = req.params;
-    console.log("getGlossaryTermById called with termId:", termId);
     
     // Validate MongoDB ObjectId format
     if (!mongoose.Types.ObjectId.isValid(termId)) {
@@ -65,7 +63,6 @@ const getGlossaryTermById = async (req, res) => {
     }
     
     const glossaryTerm = await Glossary.findById(termId);
-    console.log("Glossary term found:", glossaryTerm ? "Yes" : "No");
     
     if (!glossaryTerm || !glossaryTerm.isActive) {
       return res.status(StatusCodes.NOT_FOUND).json({

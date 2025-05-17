@@ -33,7 +33,6 @@ const getAllServices = async (req, res) => {
 const getServiceBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    console.log("getServiceBySlug called with slug:", slug);
     
     const service = await Service.findOne({ slug, isActive: true });
     
@@ -67,7 +66,6 @@ const getServiceBySlug = async (req, res) => {
 const getServiceById = async (req, res) => {
   try {
     const { serviceId } = req.params;
-    console.log("getServiceById called with serviceId:", serviceId);
     
     // Validate MongoDB ObjectId format
     if (!mongoose.Types.ObjectId.isValid(serviceId)) {
@@ -78,7 +76,6 @@ const getServiceById = async (req, res) => {
     }
     
     const service = await Service.findById(serviceId);
-    console.log("Service found:", service ? "Yes" : "No");
     
     if (!service || !service.isActive) {
       return res.status(StatusCodes.NOT_FOUND).json({
