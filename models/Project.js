@@ -31,7 +31,6 @@ const ProjectSchema = new Schema(
     contentBlocks: [ContentBlockSchema],
     markdownContent: { type: String, trim: true }, // Full markdown content
     projectInfo: [ProjectInfoSchema], // Client, Timeline, Services, Website
-    isPublished: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     user: { type: mongoose.Types.ObjectId, ref: "User" }
   },

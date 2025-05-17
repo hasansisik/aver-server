@@ -29,7 +29,6 @@ const ServiceSchema = new Schema(
     contentBlocks: [ContentBlockSchema],
     markdownContent: { type: String, trim: true }, // Added for full markdown content
     features: [FeatureSchema], // Service features list
-    isPublished: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     user: { type: mongoose.Types.ObjectId, ref: "User" }
   },

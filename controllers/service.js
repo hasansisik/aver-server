@@ -43,13 +43,6 @@ const getServiceBySlug = async (req, res) => {
       });
     }
     
-    // If service is not published and user is not authenticated, return 404
-    if (!service.isPublished && !req.user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Servis bulunamadı"
-      });
-    }
-    
     // If there's markdown content but no content blocks, convert markdown to basic content blocks
     if (service.markdownContent && (!service.contentBlocks || service.contentBlocks.length === 0)) {
       // This is a simple conversion - in a real app, you'd use a proper markdown parser
@@ -93,13 +86,6 @@ const getServiceById = async (req, res) => {
       });
     }
     
-    // If service is not published and user is not authenticated, return 404
-    if (!service.isPublished && !req.user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Servis bulunamadı"
-      });
-    }
-    
     res.status(StatusCodes.OK).json({ service });
   } catch (error) {
     console.error("getServiceById error:", error);
@@ -120,7 +106,6 @@ const createService = async (req, res) => {
       image, 
       contentBlocks, 
       features, 
-      isPublished,
       markdownContent
     } = req.body;
     
@@ -164,7 +149,6 @@ const createService = async (req, res) => {
       contentBlocks: contentBlocks || [],
       markdownContent,
       features: features || [],
-      isPublished: isPublished || false,
       user: req.user.userId
     });
     
@@ -222,6 +206,11 @@ const updateService = async (req, res) => {
       }
       
       updates.slug = newSlug;
+    }
+    
+    // Remove isPublished from updates if present
+    if (updates.hasOwnProperty('isPublished')) {
+      delete updates.isPublished;
     }
     
     // Update service fields

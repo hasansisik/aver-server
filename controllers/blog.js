@@ -100,7 +100,6 @@ const createBlog = async (req, res) => {
       category, 
       contentBlocks, 
       tags, 
-      isPublished,
       markdownContent,
       subtitle,
       author
@@ -148,7 +147,6 @@ const createBlog = async (req, res) => {
       subtitle,
       author,
       tags: tags || [],
-      isPublished: isPublished || false,
       user: req.user.userId
     });
     
@@ -206,6 +204,11 @@ const updateBlog = async (req, res) => {
       }
       
       updates.slug = newSlug;
+    }
+    
+    // Remove isPublished from updates if present
+    if (updates.hasOwnProperty('isPublished')) {
+      delete updates.isPublished;
     }
     
     // Update blog fields

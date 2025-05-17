@@ -26,7 +26,6 @@ const BlogSchema = new Schema(
     subtitle: { type: String, trim: true }, // Added for frontmatter subtitle
     author: { type: String, trim: true }, // Added for blog post author
     tags: [{ type: String, trim: true }],
-    isPublished: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     user: { type: mongoose.Types.ObjectId, ref: "User" }
   },

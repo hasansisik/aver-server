@@ -102,7 +102,6 @@ const createProject = async (req, res) => {
       color,
       contentBlocks, 
       projectInfo,
-      isPublished,
       markdownContent
     } = req.body;
     
@@ -147,7 +146,6 @@ const createProject = async (req, res) => {
       contentBlocks: contentBlocks || [],
       markdownContent,
       projectInfo: projectInfo || [],
-      isPublished: isPublished || false,
       user: req.user.userId
     });
     
@@ -205,6 +203,11 @@ const updateProject = async (req, res) => {
       }
       
       updates.slug = newSlug;
+    }
+    
+    // Remove isPublished from updates if present
+    if (updates.hasOwnProperty('isPublished')) {
+      delete updates.isPublished;
     }
     
     // Update project fields
