@@ -43,13 +43,6 @@ const getBlogBySlug = async (req, res) => {
       });
     }
     
-    // If blog is not published and user is not authenticated, return 404
-    if (!blog.isPublished && !req.user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Blog post bulunamadı"
-      });
-    }
-    
     // If there's markdown content but no content blocks, convert markdown to basic content blocks
     if (blog.markdownContent && (!blog.contentBlocks || blog.contentBlocks.length === 0)) {
       // This is a simple conversion - in a real app, you'd use a proper markdown parser
@@ -86,20 +79,6 @@ const getBlogById = async (req, res) => {
     }
     
     const blog = await Blog.findById(blogId);
-    console.log("Blog found:", blog ? "Yes" : "No");
-    
-    if (!blog || !blog.isActive) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Blog post bulunamadı"
-      });
-    }
-    
-    // If blog is not published and user is not authenticated, return 404
-    if (!blog.isPublished && !req.user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Blog post bulunamadı"
-      });
-    }
     
     res.status(StatusCodes.OK).json({ blog });
   } catch (error) {
