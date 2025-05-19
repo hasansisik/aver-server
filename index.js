@@ -4,7 +4,14 @@ require("express-async-errors");
 const cors = require("cors");
 const express = require("express");
 const app = express();
-app.use(cors());
+
+// CORS configuration
+app.use(cors({
+  origin: 'https://glawi.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // rest of the packages
 const morgan = require("morgan");
