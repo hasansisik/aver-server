@@ -4,6 +4,7 @@ require("express-async-errors");
 const cors = require("cors");
 const express = require("express");
 const app = express();
+app.use(cors());
 
 // rest of the packages
 const morgan = require("morgan");
@@ -26,10 +27,6 @@ const notFoundMiddleware = require("./middleware/not-found");
 const erorHandlerMiddleware = require("./middleware/eror-handler");
 
 //app
-app.use(cors());
-
-// For preflight OPTIONS requests
-app.options('*', cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET_KEY));
