@@ -26,11 +26,7 @@ const notFoundMiddleware = require("./middleware/not-found");
 const erorHandlerMiddleware = require("./middleware/eror-handler");
 
 //app
-app.use(cors({
-  origin: ['http://localhost:5005', 'http://localhost:3000', 'http://192.168.1.69:5005', 'http://192.168.1.69:3000', 'exp://192.168.1.69:19000'],
-  credentials: true,
-  exposedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 
 // For preflight OPTIONS requests
 app.options('*', cors());
