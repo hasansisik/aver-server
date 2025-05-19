@@ -4,19 +4,10 @@ const Schema = mongoose.Schema;
 // Schema for service features
 const FeatureSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  order: { type: Number, default: 0 }
-});
-
-// Schema for different content block types
-const ContentBlockSchema = new mongoose.Schema({
-  type: { 
-    type: String, 
-    required: true, 
-    enum: ['text', 'image', 'code', 'quote', 'video', 'table', 'list'] 
-  },
-  content: { type: String, required: true },
   order: { type: Number, default: 0 },
-  metadata: { type: Schema.Types.Mixed }, // For additional data like image URLs, code language, etc.
+  content: { type: String, trim: true }, // Added content field for each feature
+  icon: { type: String, trim: true }, // Optional icon for the feature
+  image: { type: String, trim: true } // Optional image for the feature
 });
 
 const ServiceSchema = new Schema(
@@ -26,9 +17,8 @@ const ServiceSchema = new Schema(
     icon: { type: String, trim: true },
     image: { type: String, trim: true },
     slug: { type: String, required: true, trim: true, unique: true },
-    contentBlocks: [ContentBlockSchema],
-    markdownContent: { type: String, trim: true }, // Added for full markdown content
-    features: [FeatureSchema], // Service features list
+    markdownContent: { type: String, trim: true }, // Main service content
+    features: [FeatureSchema], // Service features list with content
     isActive: { type: Boolean, default: true },
     user: { type: mongoose.Types.ObjectId, ref: "User" }
   },

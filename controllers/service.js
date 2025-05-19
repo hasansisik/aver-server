@@ -506,7 +506,7 @@ const updateContentBlock = async (req, res) => {
 const updateFeature = async (req, res) => {
   try {
     const { serviceId } = req.params;
-    const { featureId, title, order } = req.body;
+    const { featureId, title, content, icon, image, order } = req.body;
     
     if (!req.user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ 
@@ -548,9 +548,10 @@ const updateFeature = async (req, res) => {
       }
       
       service.features[featureIndex].title = title;
-      if (order !== undefined) {
-        service.features[featureIndex].order = order;
-      }
+      if (content !== undefined) service.features[featureIndex].content = content;
+      if (icon !== undefined) service.features[featureIndex].icon = icon;
+      if (image !== undefined) service.features[featureIndex].image = image;
+      if (order !== undefined) service.features[featureIndex].order = order;
     } else {
       // Add new feature
       let newOrder = 0;
@@ -560,6 +561,9 @@ const updateFeature = async (req, res) => {
       
       service.features.push({
         title,
+        content,
+        icon,
+        image,
         order: order !== undefined ? order : newOrder
       });
     }
