@@ -5,12 +5,20 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
+
 // CORS configuration
 app.use(cors({
-  origin: 'https://aver-nextjs-tau.vercel.app/',
-  credentials: true,
+  origin: function(origin, callback) {
+    // Allow any origin that matches your IP address with any port
+    if (!origin || origin.startsWith('http://192.168.1.58:') || origin === 'http://localhost:3000' || origin === 'https://aver-nextjs-tau.vercel.app') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // rest of the packages
